@@ -1,0 +1,33 @@
+version: "3"
+services:
+
+  app_mongodb:
+    container_name: app_mongodb
+    image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+      - MONGO_INITDB_DATABASE=admin
+      - MONGO_USERNAME=tinhvq
+      - MONGO_PASSWORD=tinhvq
+      - MONGO_DATABASE=tinhvq
+    ports:
+      - 37017:27017
+    networks:
+      - app-tier
+    depends_on:
+      - app_redis
+
+  app_redis:
+    container_name: app_redis
+    image: redis
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+    - 6379:6379
+    networks:
+      - app-tier
+
+networks:
+  app-tier:
+    driver: bridge
